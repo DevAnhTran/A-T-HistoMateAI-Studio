@@ -1,0 +1,485 @@
+/* -------------------------
+   Reset + base
+   ------------------------- */
+* { box-sizing: border-box; }
+html, body {
+    min-height: 100%;
+    height: auto;              /* cho phép cuộn */
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+}
+
+
+body {
+    background: url('article.jpg') center center / cover no-repeat;
+
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+
+/* Overlay when sidebar open */
+.overlay {
+  position:fixed; inset:0; background:rgba(0,0,0,0.45);
+  opacity:0; pointer-events:none; transition:opacity .25s;
+  z-index:20;
+}
+
+/* Topbar (hamburger + brand) */
+.topbar {
+  position:fixed; left:0; right:0; top:0; height:64px;
+  display:flex; align-items:center; gap:12px;
+  padding:0 18px; z-index:30;
+  background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.20));
+  backdrop-filter: blur(4px);
+}
+.topbar #menu-toggle {
+  background:transparent; color:#fff; border:0; font-size:16px; cursor:pointer;
+}
+.topbar .brand {
+  margin-left:8px; font-weight:700; font-size:18px; color:#fff;
+  text-shadow:0 2px 6px rgba(0,0,0,0.7);
+}
+
+/* SIDEBAR */
+.sidebar {
+  position:fixed; left:0; top:0; bottom:0; width:220px;
+  background:linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.45));
+  padding:24px 16px; transform:translateX(-260px);
+  transition:transform .28s;
+  z-index:40;
+  box-shadow: 6px 0 18px rgba(0,0,0,0.45);
+}
+.sidebar.open { transform:translateX(0); }
+.sidebar .close-btn {
+  position:absolute; right:10px; top:8px; background:transparent; border:0; color:#fff; font-size:20px; cursor:pointer;
+}
+.side-title { color:#fff; font-size:22px; margin:6px 0 18px; text-shadow:0 2px 6px rgba(0,0,0,0.7); }
+.side-nav { display:flex; flex-direction:column; gap:12px; }
+.side-nav .nav-btn {
+  border:0; padding:12px 14px; border-radius:8px; text-align:left;
+  background:rgba(255,255,255,0.06); color:#fff; cursor:pointer;
+  font-weight:600; box-shadow: inset 0 -2px rgba(0,0,0,0.12);
+}
+.side-nav .nav-btn:hover { background:rgba(255,255,255,0.12); transform:translateX(4px); }
+.side-nav .nav-btn.active { background:rgba(255,255,255,0.16); box-shadow:0 4px 12px rgba(0,0,0,0.35); }
+
+/* main content area */
+.main {
+  min-height:100vh; padding-top:84px; padding-left:36px; padding-right:36px;
+}
+.page-inner { max-width:1200px; margin:0 auto; }
+
+/* Title block (top of page) */
+.title-block { margin-bottom:18px; }
+.page-title {
+  font-family:'Poppins',sans-serif;
+  font-size:26px;
+  line-height:1.15;
+  margin:0;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.65);
+}
+
+.subtitle {
+  margin-top:10px;
+  font-family:'Roboto',sans-serif;
+  font-size:15px;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.55);
+}
+
+/* sections cards */
+.page-section { display:none; }
+.page-section.active { display:block; }
+.card {
+  background: rgba(255,255,255,0.06);
+  padding:18px; border-radius:12px; color:#fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+/* Chat input fixed bottom and centered */
+.chat-input-wrap {
+  position:fixed; left:0; right:0; bottom:28px; display:flex; justify-content:center;
+  z-index:50; pointer-events:auto;
+}
+.chat-form {
+  width:80%; max-width:920px; display:flex; gap:12px; align-items:center;
+  background: rgba(255,255,255,0.06); padding:14px; border-radius:12px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+  backdrop-filter: blur(6px);
+}
+.chat-form input[type="text"] {
+  flex:1; padding:12px 14px; border-radius:8px; border:2px solid rgba(0,0,0,0.2);
+  font-size:16px; font-family:'Roboto',sans-serif;
+  background: rgba(255,255,255,0.95); color:#222;
+}
+.send-btn {
+  background:#109c52; color:#fff; border:0; padding:10px 16px; border-radius:8px; cursor:pointer;
+  font-weight:700;
+}
+
+/* small screens */
+@media (max-width:880px){
+  .sidebar { width:220px; }
+  .chat-form { width:92%; }
+  .page-title { font-size:24px; }
+}
+
+/* WHEN SIDEBAR OPEN: show overlay + darken page */
+.app-sidebar-open .overlay { opacity:1; pointer-events:auto; }
+.app-sidebar-open body { overflow:hidden; }
+.topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* khoảng cách giữa Menu – logo – brand */
+}
+
+.topbar .logo {
+    width: 78px;
+    height: 90px;
+    object-fit: contain;
+}
+/* HEADER cố định */
+.topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: rgba(0,0,0,0.65);
+  display: flex;
+  align-items: center;
+  padding: 0 15px;
+  z-index: 1000;
+}
+
+/* SIDEBAR nằm dưới header */
+.sidebar {
+  position: fixed;
+  top: 60px;
+  left: -260px;
+  width: 260px;
+  height: calc(100% - 60px);
+  background: rgba(0,0,0,0.75);
+  padding: 20px 15px;
+  transition: left 0.3s;
+  z-index: 999;
+}
+
+.sidebar.open {
+  left: 0;
+}
+
+/* overlay không che header */
+.overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background: rgba(0,0,0,0.45);
+  display: none;
+  z-index: 998;
+}
+
+.overlay.show {
+  display: block;
+}
+/* -------------------------
+   Sidebar buttons – Optimized Size
+   ------------------------- */
+
+.side-nav .nav-btn {
+  width: 94%;
+  padding: 18px 20px;       /* tăng chiều cao nút */
+  font-size: 1.15rem;       /* chữ lớn hơn, cân với UI tổng */
+  border-radius: 14px;      /* bo tròn sang hơn */
+  background: rgba(255,255,255,0.09);
+  font-weight: 600;
+  box-shadow: inset 0 -3px rgba(0,0,0,0.18);
+  transition: 0.2s ease;
+}
+
+.side-nav .nav-btn i {
+  font-size: 1.45rem;       /* icon to hơn + đẹp hơn */
+  margin-right: 12px;
+}
+
+.side-nav {
+  gap: 16px;                /* giãn cách giữa các nút */
+}
+
+/* Hover + Active chỉnh theo kích thước mới */
+.side-nav .nav-btn:hover {
+  background: rgba(255,255,255,0.16);
+  transform: translateX(6px);
+}
+
+.side-nav .nav-btn.active {
+  background: rgba(255,255,255,0.20);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.45);
+}
+.page-title {
+    font-size: 25x;      /* độ lớn đẹp cho tiêu đề chính */
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-size: 18px;      /* tăng size subtitle cho dễ đọc */
+    font-weight: 300;
+    margin-top: 8px;
+}
+.header-text-wrapper {
+    background: rgba(0, 0, 0, 0.45);   /* lớp nền đen mờ */
+    padding: 16px 24px;
+    border-radius: 10px;
+    display: inline-block;             /* chỉ bọc đúng phần chữ */
+    backdrop-filter: blur(2px);        /* làm mịn thêm */
+}
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35); /* chỉnh 0.45 để tối hơn hoặc bớt */
+    pointer-events: none;
+    z-index: 0;
+}
+
+body * {
+    position: relative;
+    z-index: 1;
+}
+
+
+/* === TĂNG ĐỘ NỔI CHO TIÊU ĐỀ + SUBTITLE === */
+.page-title,
+.subtitle {
+    text-shadow:
+        2px 2px 4px rgba(0,0,0,0.7),
+        -2px -2px 4px rgba(0,0,0,0.7);
+}
+
+/* Tăng cỡ chữ cho đẹp hơn */
+.page-title {
+    font-size: 28px;        /* chỉnh tùy ý */
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+/* ============================================
+   BONG BÓNG CHAT (TRÁI / PHẢI)
+   ============================================ */
+
+.chat-area {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 12px 4px;
+}
+
+/* Tin nhắn bot (trái) */
+.chat-msg.bot {
+    max-width: 70%;
+    align-self: flex-start;
+    background: rgba(255, 255, 255, 0.85);
+    color: #fff;   /* FIX 1 — đổi màu chữ bot thành trắng */
+    padding: 12px 16px;
+    border-radius: 14px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+}
+
+/* Tin nhắn user (phải) */
+.chat-msg.user {
+    max-width: 70%;
+    align-self: flex-end;
+    background: #109c52;
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 14px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.45);
+}
+/* === Bong bóng chat user & bot — nền trắng đục mờ === */
+.page-section#chat .chat-area > div {
+    background: rgba(255, 255, 255, 0.25) !important;
+    backdrop-filter: blur(4px) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+/* ========== CUSTOM SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e1e1e; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+.page-section {
+  min-height: 100vh;
+  height: auto;
+  overflow-y: visible;
+}
+
+textarea {
+    overflow-y: hidden;
+    resize: none;
+}
+/* ---------- chat/quiz/ extra styles ---------- */
+.chat-area {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  padding:18px;
+  height: calc(100vh - 300px);
+  overflow-y:auto;
+  align-items:flex-start;
+}
+
+.chat-msg {
+  max-width:72%;
+  padding:10px 14px;
+  border-radius:14px;
+  box-shadow:0 3px 8px rgba(0,0,0,0.25);
+  font-size:18px;    /* FIX 2 — tăng font chữ bubble */
+  line-height:1.45;
+}
+
+.chat-msg.bot { background: rgba(255,255,255,0.92); color:#fff; align-self:flex-start; }
+.chat-msg.user { background:#109c52; color:#fff; align-self:flex-end; }
+
+.chat-msg.thinking { display:inline-flex; gap:6px; align-items:center; background: rgba(255,255,255,0.9); }
+.chat-msg.thinking .dot { font-size:14px; opacity:0.6; animation: blink 1s infinite; }
+.chat-msg.thinking .dot:nth-child(2) { animation-delay:.12s }
+.chat-msg.thinking .dot:nth-child(3) { animation-delay:.24s }
+@keyframes blink { 0%{transform:translateY(0);opacity:0.25}50%{transform:translateY(-3px);opacity:1}100%{transform:translateY(0);opacity:0.25} }
+
+.chat-input-wrap { z-index:50; position:fixed; left:0; right:0; bottom:28px; display:flex; justify-content:center; }
+.chat-form { width:70%; display:flex; gap:8px; align-items:center; }
+.chat-form textarea#userInput { flex:1; padding:12px 14px; border-radius:8px; border:2px solid rgba(0,0,0,0.2); font-size:16px; font-family:'Roboto',sans-serif; background: rgba(255,255,255,0.95); color:#222; min-height:44px; max-height:300px; overflow-y:auto; resize:none; line-height:1.35; }
+
+/* ---------- FIX 3: XÓA VẠCH ĐEN Ở Ô NHẬP CHAT ---------- */
+.chat-form textarea#userInput {
+    border: none !important;
+    outline: none !important;
+    overflow-y: auto;
+}
+.chat-form textarea#userInput::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+/* -------------------------------------------------------- */
+
+.quiz-area { margin-top:14px; }
+.quiz-item { background: rgba(255,255,255,0.85); padding:10px; border-radius:8px; margin-bottom:8px; }
+.quiz-q { font-weight:600; margin-bottom:6px; }
+.quiz-options label { display:block; margin-bottom:5px; cursor:pointer; }
+
+.quiz-controls { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+
+.large-card { background: rgba(255,255,255,0.06); padding:18px; border-radius:10px; margin-bottom:14px; color:#fff; box-shadow:none; }
+.quiz-generate-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 12px 28px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: 0.25s ease;
+}
+
+.quiz-generate-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    border-color: #fff;
+    transform: translateY(-3px);
+}
+.quiz-input {
+    width: 90px;
+    padding: 10px 14px;
+    font-size: 18px;
+    border-radius: 12px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    color: white;
+}
+
+.quiz-input:focus {
+    border-color: white;
+    outline: none;
+    background: rgba(255, 255, 255, 0.25);
+}
+/* Nền trắng đục cho từng câu quiz */
+.quiz-item {
+    background: rgba(255, 255, 255, 0.25);  /* trắng đục */
+    backdrop-filter: blur(8px);             /* làm mờ nền phía sau */
+    -webkit-backdrop-filter: blur(8px);
+    
+    border-radius: 14px;
+    padding: 20px;
+    margin: 20px 0;
+
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Tùy chỉnh câu hỏi */
+.quiz-q {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Tùy chỉnh từng lựa chọn */
+.quiz-option {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 17px;
+}
+.quiz-submit-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    padding: 12px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    border-radius: 14px;
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    margin-top: 20px;
+    transition: 0.2s ease;
+}
+
+.quiz-submit-btn:hover {
+    background: rgba(255, 255, 255, 0.35);
+    transform: scale(1.05);
+}
+
+.bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('article.jpg') center center / cover no-repeat;
+    z-index: -1;
+}
